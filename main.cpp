@@ -1,3 +1,11 @@
+/**
+ *   HEIG-VD
+ *   De: Theo Bensaci
+ *   Date: 10:41 03.10.2024
+ *   Description: Calculateur de nombre premier
+ */
+
+
 #include <iostream>
 #include <limits>
 using namespace std;
