@@ -31,75 +31,71 @@ int main(){
             << endl; 
 
     do{
+        // state pour l'inpute des nombres / affichage des nombres
+        if(state==1){
+            int inputNumber;
+            cout    << "Entrer une valeur (int) ["<<c_min<<"-"<<c_max<<"] : ";
+            cin     >> inputNumber;
 
-        switch (state)
-        {
+            if(inputNumber < c_min || inputNumber > c_max){
 
-            // state pour l'inpute des nombres / affichage des nombres
-            case 1:
+                bool toLow=inputNumber<c_min;
+
+                cout    <<          "[!] votre numbre est "
+                        << (toLow?   "en dessous de ":"au dessus de ")
+                        << (toLow?   c_min           :c_max         ) 
+                        << " [!]\n"
+                        << endl;
+
+                continue;
+            }
+
+            cout << "\nNumber :"<< endl;
+
+            int nNumber=0;
+            for (int i = c_min; i <= inputNumber; i++)
             {
-                int inputNumber;
-                cout    << "Entrer une valeur (int) ["<<c_min<<"-"<<c_max<<"] : ";
-                cin     >> inputNumber;
 
-                if(inputNumber < c_min || inputNumber > c_max){
-                    bool toLow=inputNumber<c_min;
+                bool prime=true;
 
-                    cout    <<          "[!] votre numbre est "
-                            << (toLow?   "en dessous de ":"au dessus de ")
-                            << (toLow?   c_min           :c_max         ) 
-                            << " [!]\n"
-                            << endl;
-
-                    break;
-                }
-
-                cout << "\nNumber :"<< endl;
-
-                int nNumber=0;
-                for (int i = c_min; i <= inputNumber; i++)
+                for (int j = c_min; j < i; j++)
                 {
 
-                    bool prime=true;
-
-                    for (int j = c_min; j < i; j++)
-                    {
-
-                        // si divisable => papss prime
-                        if(i!=j && i%j==0){
-                            prime=false;
-                            break;
-                        }
-
+                    // si divisable => papss prime
+                    if(i!=j && i%j==0){
+                        prime=false;
+                        break;
                     }
 
-                    if(prime){
-                        nNumber++;
-                        cout <<i<<"\t";
-                        
-                        // passe a ligne tous les 5 nombres
-                        if(nNumber==5){
-                            cout<< endl;
-                            nNumber=0;
-                        }
+                }
+
+                if(prime){
+                    nNumber++;
+                    cout <<i<<"\t";
+                    
+                    // passe a ligne tous les 5 nombres
+                    if(nNumber==5){
+                        cout<< endl;
+                        nNumber=0;
                     }
                 }
-                cout<< endl;
-                state = 2;
-        }
-
-        case 2: 
-            {
-                // state pour recommencer
-                char car;
-                cout    << "\nvoulez vous recomencez ? [o/n] : ";
-                cin     >> car;
-
-                car = tolower(car);
-                
-                state = (car=='n')?0:(car=='o')?1:3;
-                break;
             }
+            cout<< endl;
+            state = 2;
+        }
+        else{
+            // state pour recommencer
+
+            // je passe par un string par ce que vue que je peux pas faire de gestion de state de stream, ça evite chaque cararctère sois pris en qu'inpute séparé
+            string userinput;
+            char car;
+            
+            cout    << "\nvoulez vous recomencez ? [o/n] : ";
+            cin     >> userinput;
+
+            car = tolower(userinput[0]);
+            
+            state = (car=='n')?0:(car=='o')?1:2;
         }
     }
     while (state!=0);
